@@ -6,7 +6,7 @@ const port = 3000;
 const generateMessage = require("./messageGenerator")
 const hackNSA = require("./hackNSA")
 
-app.use(bodyParser);
+app.use(express.json());
 
 /*app.get('/hello-world', async (req, res) => {
     const body = generateMessage.GetFact();
@@ -44,9 +44,10 @@ app.post('/graphql', authorizationMiddleware, (req, res) => {
     });
 });
 
-const config = {'secretKey': 'SuperSecretKey'};
+const config = {secretKey: 'SuperSecretKey'};
 
 app.post('/graphql/public', (req, res) => {
+    console.log("IM HERE");
     const {user, pass} = req.body;
     if(user === "laura" && pass === "123") {
         jwt.sign({}, config.secretKey, (err, token) => {
