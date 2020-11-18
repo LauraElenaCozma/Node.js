@@ -131,3 +131,30 @@ app.get('/users/:userId/address', async function(req, res) {
   });
 //ship.belongsTo(captain)  => ship are capitain id
 
+
+//npx sequelize-cli model:generate --name Account --attributes iban:string,cardType:string,cardNumber:string
+
+app.post('/users/:userId/account', async function(req, res) {
+    const userId = req.params.userId;
+    const user = await models.User.findByPk(userId);
+    const account = await user.createAccount({
+      iban: 'IT31A8497112740YZ575DJ28BP4',
+      cardNumber:'4485480221084675',
+      cardType: 'MasterCard'
+    });
+    
+    res.send({
+      status: 'ok',
+    });
+  });
+  
+  app.get('/users/:userId/account', async function(req, res) {
+    const userId = req.params.userId;
+    const user = await models.User.findByPk(userId);
+    const account = await user.getAccounts();
+  
+    res.send({
+      last_name: user.lastName,
+      account,
+    });
+  });
