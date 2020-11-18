@@ -117,3 +117,17 @@ app.get('/users/:userId', async function(req, res) {
         email: user.email
     })
 })
+
+
+app.get('/users/:userId/address', async function(req, res) {
+    const userId = req.params.userId;
+    const user = await models.User.findByPk(userId);
+    const address = await user.getAddress();
+  
+    res.send({
+      last_name: user.lastName,
+      address,
+    });
+  });
+//ship.belongsTo(captain)  => ship are capitain id
+
